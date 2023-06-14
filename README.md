@@ -1,9 +1,6 @@
-# SecCertRoadmapHTML
-Security Certification Roadmap HTML5/CSS3 version
+# Security Certification Roadmap
 
-This code is embedded inside the html page at https://www.pauljerimy.com/security-certification-roadmap/
-
-I am open to restructing this html if a better way is known. I am a beginner at best when it comes to HTML and CSS.
+Security Certification Roadmap - a mapping version of [pauljerimy](https://pauljerimy.com/security-certification-roadmap/)
 
 ## Change Log
 
