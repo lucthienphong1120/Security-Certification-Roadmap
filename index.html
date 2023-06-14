@@ -5,841 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        /* Set fill and line colors for certification boxes. dk suffix means "dark" for the line color. */
-        :root {
-            --green: #70AD47;
-            --greendk: #548235;
-            --teal: #008080;
-            --tealdk: #003F3E;
-            --orange: #fa8e36;
-            --orangedk: #c06216;
-            --orangelt: #fdeada;
-            --yellow: #e4ac03;
-            --yellowdk: #7F6000;
-            --black: #2a2a2a;
-            --blackdk: #000000;
-            --blacklt: #d9d9d9;
-            --purple: #683e9b;
-            --purpledk: #352647;
-            --purplelt: #eddbff;
-            --skyblue: #6bb3f6;
-            --skybluedk: #2665a0;
-            --blue: #2e5688;
-            --bluedk: #1f3147;
-            --bluelt: #dce6f2;
-            --red: #c0514d;
-            --reddk: #8c3736;
-            --redlt: #f2dcdb;
-            --magenta: #830083;
-            --magentadk: #490e49;
-        }
-
-        /* Style for the text at the bottom right of the chart */
-        .key {
-            color: #000000;
-            padding: 0.2vmax;
-            font-size: 1vmax;
-            text-align: right;
-            display: grid;
-            grid-template-rows: 1.68vmax;
-            grid-column-gap: 0.2vmax;
-            grid-gap: 0.1vmax;
-        }
-
-        /* Primary style for the chart, which is the parent container for everything else. */
-        .certchart {
-            background: white;
-            color: #323232;
-            font-weight: 300;
-            margin-top: 1vmax;
-            margin-left: 1vmax;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-family: "Segoe UI", "Calibri", Tahoma, "Geneva", Verdana, sans-serif;
-            float: left;
-        }
-
-        /* Background grid for domain titles and borders */
-        .certbg {
-            background: #ffffff;
-            justify-content: left;
-            display: grid;
-            position: relative;
-            grid-template-columns: [silllevel] 0.8vmax [network] 7.5vmax [iam] 2.65vmax [engineer] 17.2vmax [asset] 5.1vmax [mgmt] 21.8vmax [testing] 7.5vmax [software] 2.7vmax [operations] 31.5vmax;
-            grid-template-rows: [domain] 2vmax [chart] 43.7vmax;
-            column-gap: 0.2vmax;
-            /* row-gap: 0.2vmax; */
-            white-space: pre-wrap;
-            line-height: 130%;
-            left: -0.7vmax;
-        }
-
-        /* Style for the title text of each domain */
-        .domaintitle {
-            font-weight: 450;
-            font-size: 0.8vmax;
-            text-align: center;
-            align-content: bottom;
-            justify-content: center;
-            align-self: flex-end;
-            display: flex;
-            margin-bottom: 0.1vmax;
-        }
-
-        /* Styles for each certification domain box. This also allows for the placement of sub-domain shaded boxes. */
-        .skilllevelcontainer {
-            display: grid;
-        }
-
-        .networkcontainer {
-            display: grid;
-            border: 2px solid var(--green);
-            border-radius: 0.25vmax;
-        }
-
-        .iamcontainer {
-            display: grid;
-            border: 2px solid var(--teal);
-            border-radius: 0.25vmax;
-        }
-
-        .engineercontainer {
-            display: grid;
-            border: 2px solid var(--orange);
-            border-radius: 0.25vmax;
-            grid-template-columns: 2.3vmax 2.3vmax 2.2vmax 2.2vmax 2.2vmax 2.2vmax 2.2vmax;
-            grid-template-rows: 1vmax auto;
-            column-gap: 0.2vmax;
-        }
-
-        .assetcontainer {
-            display: grid;
-            border: 2px solid var(--yellow);
-            border-radius: 0.25vmax;
-        }
-
-        .mgmtcontainer {
-            display: grid;
-            border: 2px solid var(--black);
-            border-radius: 0.25vmax;
-            grid-template-columns: 2.2vmax 2.2vmax 2.2vmax 2.2vmax 2.3vmax 2.2vmax 2.2vmax 2.2vmax 2.2vmax;
-            grid-template-rows: 1vmax auto;
-            column-gap: 0.2vmax;
-        }
-
-        .testingcontainer {
-            display: grid;
-            border: 2px solid var(--magenta);
-            border-radius: 0.25vmax;
-        }
-
-        .softwarecontainer {
-            display: grid;
-            border: 2px solid var(--skyblue);
-            border-radius: 0.25vmax;
-        }
-
-        .operationscontainer {
-            display: grid;
-            border: 2px solid var(--red);
-            border-radius: 0.25vmax;
-            grid-template-columns: 2.2vmax 2.2vmax 2.2vmax 2.3vmax 2.2vmax 2.3vmax 2.2vmax 2.2vmax 2.2vmax 2.2vmax 2.2vmax 2.2vmax 2.1vmax;
-            grid-template-rows: 1vmax auto;
-            column-gap: 0.2vmax;
-        }
-
-        /* Style for sub-domain titles. Mostly to allow for proper spanning. */
-        .subtitle1 {
-            font-weight: 400;
-            font-size: 0.5vmax;
-            text-align: center;
-            align-content: bottom;
-            justify-content: center;
-            align-self: flex-end;
-            display: flex;
-        }
-
-        .subtitle2 {
-            font-weight: 400;
-            font-size: 0.5vmax;
-            text-align: center;
-            align-content: bottom;
-            justify-content: center;
-            align-self: flex-end;
-            display: flex;
-            grid-column: span 2;
-        }
-
-        .subtitle3 {
-            font-weight: 400;
-            font-size: 0.5vmax;
-            text-align: center;
-            align-content: bottom;
-            justify-content: center;
-            align-self: flex-end;
-            display: flex;
-            grid-column: span 3;
-        }
-
-        .subtitle4 {
-            font-weight: 400;
-            font-size: 0.5vmax;
-            text-align: center;
-            align-content: bottom;
-            justify-content: center;
-            align-self: flex-end;
-            display: flex;
-            grid-column: span 4;
-        }
-
-        .subtitle5 {
-            font-weight: 400;
-            font-size: 0.5vmax;
-            text-align: center;
-            align-content: bottom;
-            justify-content: center;
-            align-self: flex-end;
-            display: flex;
-            grid-column: span 5;
-        }
-
-        /* Style for certification boxes, separated by domain for proper coloring. Also used to indicate how many boxes to span the certs. */
-        .engsubdomain1 {
-            display: flex;
-            background: var(--orangelt);
-            column-gap: 1vmax;
-        }
-
-        .engsubdomain4 {
-            display: flex;
-            background: var(--orangelt);
-            grid-column: span 4;
-            column-gap: 1vmax;
-            margin-left: 0.3vmax;
-        }
-
-        .mgmtsubdomain4 {
-            display: flex;
-            background: var(--blacklt);
-            grid-column: span 4;
-            column-gap: 1vmax;
-            margin-left: 0.3vmax;
-        }
-
-        .bluesubdomain2 {
-            display: flex;
-            background: var(--bluelt);
-            grid-column: span 2;
-            margin-left: 0.1vmax;
-        }
-
-        .redsubdomain2 {
-            display: flex;
-            background: var(--redlt);
-            grid-column: span 2;
-            column-gap: 1vmax;
-        }
-
-        .redsubdomain5 {
-            display: flex;
-            background: var(--redlt);
-            grid-column: span 5;
-            column-gap: 1vmax;
-        }
-
-        /* Foreground grid for certification squares */
-        .certcontainer {
-            justify-content: center;
-            text-align: center;
-            align-content: center;
-            line-height: 120%;
-            display: grid;
-            position: absolute;
-            font-size: 0.6vmax;
-            top: 6.2vmax;
-            left: -0.31vmax;
-            grid-template-columns: [skilllevel] 1.7vmax [network] 2.3vmax 2.3vmax 2.3vmax .4vmax [iam] 2.3vmax .4vmax [engineer] 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 0.4vmax [asset] 2.3vmax 2.3vmax 0.4vmax [mgmt] 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 0.4vmax [testing] 2.3vmax 2.3vmax 2.3vmax 0.4vmax [software] 2.3vmax 0.4vmax [ops] 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax;
-            grid-template-rows: repeat(27, 1.5vmax);
-            column-gap: 0.1vmax;
-            row-gap: 0.1vmax;
-            white-space: pre-wrap;
-        }
-
-        /* Skill level grid overlayed on top of .certcontainer to show
-    .skilllevel {
-        justify-content: center;
-        text-align: center;
-        align-content: center;
-        line-height: 120%;
-        display: grid;
-        position: absolute;
-        font-size:0.6vmax;
-        top: 3.5vmax;
-        left: 2.6vmax;
-        grid-template-columns: max-content;
-        grid-template-rows: 13.5vmax 22.5vmax 7.5vmax;
-        column-gap: 0.1vmax;
-        row-gap: 0.1vmax;
-        white-space: pre-wrap;        
-    } */
-        .spacer {
-            background: none;
-        }
-
-        .spacer5 {
-            background: none;
-            grid-column: span 5;
-        }
-
-        .spacer10 {
-            background: none;
-            grid-column: span 10;
-        }
-
-        .skilllevelitem {
-            transform: rotate(270deg);
-            justify-items: right;
-            align-items: flex-end;
-            font-weight: 600;
-            font-size: 0.8vmax;
-            display: grid;
-        }
-
-        .networkitem1 {
-            background: var(--green);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--greendk);
-            border-radius: 0.25vmax;
-        }
-
-        .networkitem2 {
-            background: var(--green);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--greendk);
-            border-radius: 0.25vmax;
-            grid-column: span 3;
-        }
-
-        .iamitem1 {
-            background: var(--teal);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--tealdk);
-            border-radius: 0.25vmax;
-        }
-
-        .engineeritem1 {
-            background: var(--orange);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--orangedk);
-            border-radius: 0.25vmax;
-        }
-
-        .engineeritem2 {
-            background: var(--orange);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--orangedk);
-            border-radius: 0.25vmax;
-            grid-column: span 3;
-        }
-
-        .engineeritem3 {
-            background: var(--orange);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--orangedk);
-            border-radius: 0.25vmax;
-            grid-column: span 5;
-        }
-
-        .engineeritem4 {
-            background: var(--orange);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--orangedk);
-            border-radius: 0.25vmax;
-            grid-column: span 6;
-        }
-
-        .assetitem1 {
-            background: var(--yellow);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--yellowdk);
-            border-radius: 0.25vmax;
-        }
-
-        .assetitem2 {
-            background: var(--yellow);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--yellowdk);
-            border-radius: 0.25vmax;
-            grid-column: span 3;
-        }
-
-        .mgmtitem1 {
-            background: var(--black);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--blackdk);
-            border-radius: 0.25vmax;
-        }
-
-        .mgmtitem2 {
-            background: var(--black);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--blackdk);
-            border-radius: 0.25vmax;
-            grid-column: span 3;
-        }
-
-        .mgmtitem3 {
-            background: var(--black);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--blackdk);
-            border-radius: 0.25vmax;
-            grid-column: span 5;
-        }
-
-        .mgmtitem4 {
-            background: var(--black);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--blackdk);
-            border-radius: 0.25vmax;
-            grid-column: span 6;
-        }
-
-        .mgmtitem5 {
-            background: var(--black);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--blackdk);
-            border-radius: 0.25vmax;
-            grid-column: span 6;
-        }
-
-        .mgmtitem15 {
-            background: var(--black);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--blackdk);
-            border-radius: 0.25vmax;
-            grid-column: span 19;
-        }
-
-        .mgmtitem17 {
-            background: var(--black);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--blackdk);
-            border-radius: 0.25vmax;
-            grid-column: span 22;
-        }
-
-        .mgmtitem25 {
-            background: var(--black);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--blackdk);
-            border-radius: 0.25vmax;
-            grid-column: span 32;
-        }
-
-        .testitem1 {
-            background: var(--purple);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--purpledk);
-            border-radius: 0.25vmax;
-        }
-
-        .testitem2 {
-            background: var(--purple);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--purpledk);
-            border-radius: 0.25vmax;
-            grid-column: span 3;
-        }
-
-        .softwareitem1 {
-            background: var(--skyblue);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--skybluedk);
-            border-radius: 0.25vmax;
-        }
-
-        .softwareitem2 {
-            background: var(--skyblue);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--skybluedk);
-            border-radius: 0.25vmax;
-            grid-column: span 3;
-        }
-
-        .softwareitem6 {
-            background: var(--skyblue);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--skybluedk);
-            border-radius: 0.25vmax;
-            grid-column: span 9;
-        }
-
-        .blueopsitem1 {
-            background: var(--blue);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--bluedk);
-            border-radius: 0.25vmax;
-        }
-
-        .blueopsitem2 {
-            background: var(--blue);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--bluedk);
-            border-radius: 0.25vmax;
-            grid-column: span 2;
-        }
-
-        .blueopsitem3 {
-            background: var(--blue);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--bluedk);
-            border-radius: 0.25vmax;
-            grid-column: span 5;
-        }
-
-        .blueopsitem9 {
-            background: var(--blue);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--bluedk);
-            border-radius: 0.25vmax;
-            grid-column: span 11;
-        }
-
-        .redopsitem1 {
-            background: var(--red);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--reddk);
-            border-radius: 0.25vmax;
-        }
-
-        .redopsitem2 {
-            background: var(--red);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--reddk);
-            border-radius: 0.25vmax;
-            grid-column: span 2;
-        }
-
-        .redopsitem3 {
-            background: var(--red);
-            color: #ffffff;
-            font-weight: 400;
-            align-items: center;
-            justify-items: center;
-            text-decoration: none;
-            display: grid;
-            border: 0.05vmax solid var(--reddk);
-            border-radius: 0.25vmax;
-            grid-column: span 3;
-        }
-
-        /* Draft of different tooltip */
-        .tooltiptext {
-            visibility: hidden;
-            background: inherit;
-            color: inherit;
-            text-align: left;
-            padding: 0.3vmax;
-            border-radius: 0.2vmax;
-
-            position: absolute;
-            bottom: 97%;
-            left: 50%;
-            margin-left: -17.8%;
-        }
-
-        .mgmtitem25:hover .tooltiptext {
-            visibility: visible;
-        }
-
-        .tooltiptext::after {
-            content: " ";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: black transparent transparent transparent;
-        }
-
-        /* Certification tooltip hover text format */
-        [tooltiptext]:before {
-            position: absolute;
-            content: attr(tooltiptext);
-            width: max-content;
-            height: max-content;
-            padding: 0.4vmax;
-            background: inherit;
-            border: inherit;
-            border-radius: 0.2vmax;
-            color: inherit;
-            text-align: left;
-            display: none;
-            font-size: 125%;
-        }
-
-        [tooltiptext]:hover:before {
-            display: block;
-        }
-
-        [tooltiptexttitle]:before {
-            position: absolute;
-            content: attr(tooltiptexttitle);
-            width: 25vmax;
-            height: max-content;
-            padding: 0.4vmax;
-            background: var(--black);
-            border: var(--blackdk);
-            border-radius: 0.2vmax;
-            color: white;
-            text-align: left;
-            display: none;
-            font-size: 100%;
-            z-index: 1;
-            top: 4.5%;
-        }
-
-        [tooltiptexttitle]:hover:before {
-            display: block;
-        }
-
-        [tooltiptexttitleleft]:before {
-            position: absolute;
-            content: attr(tooltiptexttitleleft);
-            width: 25vmax;
-            height: max-content;
-            padding: 0.4vmax;
-            background: var(--black);
-            border: var(--blackdk);
-            border-radius: 0.2vmax;
-            color: white;
-            text-align: left;
-            display: none;
-            font-size: 100%;
-            z-index: 1;
-            top: 4.5%;
-            left: 0%;
-        }
-
-        [tooltiptexttitleleft]:hover:before {
-            display: block;
-        }
-
-        [tooltipleft]:before {
-            position: absolute;
-            content: attr(tooltipleft);
-            width: max-content;
-            height: max-content;
-            padding: 0.4vmax;
-            background: inherit;
-            border: inherit;
-            border-radius: 0.2vmax;
-            color: inherit;
-            text-align: left;
-            display: none;
-            font-size: 125%;
-            line-height: 125%;
-            left: 1%;
-        }
-
-        [tooltipleft]:hover:before {
-            display: block;
-        }
-
-        [tooltipright]:before {
-            position: absolute;
-            content: attr(tooltipright);
-            width: max-content;
-            height: max-content;
-            padding: 0.4vmax;
-            background: inherit;
-            border: inherit;
-            border-radius: 0.2vmax;
-            color: inherit;
-            text-align: left;
-            display: none;
-            font-size: 125%;
-            line-height: 125%;
-            right: 0%;
-        }
-
-        [tooltipright]:hover:before {
-            display: block;
-        }
-
-        /* Make a static image if horizontal screen is smaller than 898px (iPhone size is 898)*/
-        #interactive {
-            display: block;
-        }
-
-        #static {
-            display: none;
-        }
-
-        @media screen and (max-width: 897px) {
-            #interactive {
-                display: none;
-            }
-
-            #static {
-                display: block;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
     <div id="static">
-        <img src="https://pauljerimy.com/wp-content/uploads/2022/03/SCRApril2022.png"
-            alt="Static Security Certification Chart (April 2022)" class="wp-image-309">
+        <img src="./StaticSecurityCertificationChart.png" alt="Static Security Certification Chart">
     </div>
     <div id="interactive" class="certchart">
-        <div style="text-align:left;font-size:200%;font-weight:500;padding-bottom:0.2vmax;">Security Certification
-            Roadmap </div>
+        <div style="text-align:left;font-size:200%;font-weight:500;padding-bottom:0.2vmax;">
+            Security Certification Roadmap
+        </div>
         <!-- Begin Background Grid -->
         <div class="certbg"> <!-- Domain Title Row-->
             <div class="domaintitle"></div>
@@ -930,13 +106,13 @@
             <div class="spacer"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
-            <a class="mgmtitem25" href="https://www.giac.org/certification/security-expert-gse" tooltiptext="GIAC Security Expert
-$3,108 exam &amp; lab
-In person lab" tabindex="0" target="_blank">GSE</a>
+            <a class="mgmtitem25" href="https://www.giac.org/certification/security-expert-gse"
+                tooltiptext="GIAC Security Expert $3,108 exam &amp; lab In person lab" tabindex="0"
+                target="_blank">GSE</a>
             <div class="spacer10"></div>
-            <a class="redopsitem1" href="https://www.offensive-security.com/awe-osee/" tooltipright="Offensive Security Exploitation Expert
-$5,000 lab
-Plus travel" tabindex="0" target="_blank">OSEE</a>
+            <a class="redopsitem1" href="https://www.offensive-security.com/awe-osee/"
+                tooltipright="Offensive Security Exploitation Expert $5,000 lab Plus travel" tabindex="0"
+                target="_blank">OSEE</a>
             <div class="spacer"></div>
             <!-- Row 3 -->
             <div class="spacer"></div>
@@ -944,22 +120,19 @@ Plus travel" tabindex="0" target="_blank">OSEE</a>
             <div class="spacer"></div>
             <a class="networkitem2"
                 href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/expert/ccie-security.html"
-                tooltiptext="Cisco Certified Implementation Expert - Security
-$2,050 Hands-on Lab
-$12,000 est Travel cost" tabindex="0" target="_blank">CCIE Sec</a>
+                tooltiptext="Cisco Certified Implementation Expert - Security $2,050 Hands-on Lab $12,000 est Travel cost"
+                tabindex="0" target="_blank">CCIE Sec</a>
             <div class="spacer5"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <a class="engineeritem1"
                 href="https://www.crest-approved.org/examination/technical-security-architecture/index.html"
-                tooltiptext="CREST Registered Technical Security Architect
-$2,300 two exams
-In person in the UK" tabindex="0" target="_blank">CREST CRTSA</a>
+                tooltiptext="CREST Registered Technical Security Architect $2,300 two exams In person in the UK"
+                tabindex="0" target="_blank">CREST CRTSA</a>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <a class="mgmtitem2" href="https://www.axelos.com/certifications/itil-certifications/itil-master"
-                tooltiptext="ITIL Master
-$4,000 Interview" tabindex="0" target="_blank">ITIL Master</a>
+                tooltiptext="ITIL Master $4,000 Interview" tabindex="0" target="_blank">ITIL Master</a>
             <div class="spacer10"></div>
             <div class="spacer10"></div>
             <div class="spacer"></div>
@@ -967,8 +140,8 @@ $4,000 Interview" tabindex="0" target="_blank">ITIL Master</a>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <a class="redopsitem1"
-                href="https://help.offensive-security.com/hc/en-us/articles/4403282452628-What-is-OSCE3-" tooltiptext="Offensive Security Certified Expert 3
-$4,649 3 labs" tabindex="0" target="_blank">OSCE3</a>
+                href="https://help.offensive-security.com/hc/en-us/articles/4403282452628-What-is-OSCE3-"
+                tooltiptext="Offensive Security Certified Expert 3 $4,649 3 labs" tabindex="0" target="_blank">OSCE3</a>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
@@ -978,70 +151,56 @@ $4,649 3 labs" tabindex="0" target="_blank">OSCE3</a>
             <div class="spacer"></div>
             <a class="networkitem2"
                 href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/expert/ccie-security-v2.html"
-                tooltipleft="Cisco Certified Internetwork Expert - Enterprise Infrastructure
-~$2,050 hands-on lab
-~$12,000 in travel costs" tabindex="0" target="_blank">CCIE Ent</a>
+                tooltipleft="Cisco Certified Internetwork Expert - Enterprise Infrastructure ~$2,050 hands-on lab ~$12,000 in travel costs"
+                tabindex="0" target="_blank">CCIE Ent</a>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <a class="engineeritem1" href="https://www.vmware.com/education-services/certification/vcdx-dcv.html"
-                tooltiptext="VMware Certified Design Expert in Datacenter Virtualization
-$3,995 exams
-Application also req." tabindex="0" target="_blank">VCDX DCV</a>
+                tooltiptext="VMware Certified Design Expert in Datacenter Virtualization $3,995 exams Application also req."
+                tabindex="0" target="_blank">VCDX DCV</a>
             <div class="spacer"></div>
-            <a class="engineeritem1" href="https://www.redhat.com/en/services/certification/rhca" tooltiptext="Red Hat Certified Architect
-~$3,745 exam
-plus travel" tabindex="0" target="_blank">RHCA</a>
+            <a class="engineeritem1" href="https://www.redhat.com/en/services/certification/rhca"
+                tooltiptext="Red Hat Certified Architect ~$3,745 exam plus travel" tabindex="0" target="_blank">RHCA</a>
             <div class="spacer"></div>
-            <a class="engineeritem1" href="https://sabsa.org/certification/" tooltiptext="SABSA Chartered Security Architect - Master Certificate
-$3,750 exam &amp; thesis
-Branded course required" tabindex="0" target="_blank">SABSA SCM</a>
+            <a class="engineeritem1" href="https://sabsa.org/certification/"
+                tooltiptext="SABSA Chartered Security Architect - Master Certificate $3,750 exam &amp; thesis Branded course required"
+                tabindex="0" target="_blank">SABSA SCM</a>
             <div class="spacer10"></div>
             <div class="spacer5"></div>
             <div class="spacer"></div>
             <a class="blueopsitem9" href="https://www.giac.org/certifications/reverse-engineering-malware-grem/"
-                tooltiptext="GIAC Reverse Engineering Malware
-$949 exam
-SANS course recommended" tabindex="0" target="_blank">GREM</a>
+                tooltiptext="GIAC Reverse Engineering Malware $949 exam SANS course recommended" tabindex="0" target="_blank">GREM</a>
             <div class="spacer"></div>
-            <a class="redopsitem1" href="https://www.offensive-security.com/awae-oswe/" tooltiptext="Offensive Security Web Expert
-~$1649 lab" tabindex="0" target="_blank">OSWE</a>
+            <a class="redopsitem1" href="https://www.offensive-security.com/awae-oswe/" tooltiptext="Offensive Security Web Expert ~$1649 lab" tabindex="0" target="_blank">OSWE</a>
             <div class="spacer"></div>
-            <a class="redopsitem2" href="https://www.offensive-security.com/pen300-osep/" tooltipright="Offensive Security Experienced Penetration Tester
-$1,499 lab" tabindex="0" target="_blank">OSEP</a>
-            <a class="redopsitem1" href="https://www.offensive-security.com/exp301-osed/" tooltipright="Offensive Security Exploit Developer
-$1,499 lab" tabindex="0" target="_blank">OSED</a>
+            <a class="redopsitem2" href="https://www.offensive-security.com/pen300-osep/" tooltipright="Offensive Security Experienced Penetration Tester $1,499 lab" tabindex="0" target="_blank">OSEP</a>
+            <a class="redopsitem1" href="https://www.offensive-security.com/exp301-osed/" tooltipright="Offensive Security Exploit Developer $1,499 lab" tabindex="0" target="_blank">OSED</a>
             <!-- Row 5 -->
             <div class="spacer"></div>
             <div class="spacer10"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
-            <a class="mgmtitem4" href="https://www.isc2.org/Certifications/CISSP-Concentrations" tooltiptext="(ISC)2 Certified Information Systems Security Professional Concentrations
-$599 exam" tabindex="0" target="_blank">CISSP Concentrations</a>
+            <a class="mgmtitem4" href="https://www.isc2.org/Certifications/CISSP-Concentrations" tooltiptext="(ISC)2 Certified Information Systems Security Professional Concentrations $599 exam" tabindex="0" target="_blank">CISSP Concentrations</a>
             <div class="spacer"></div>
-            <a class="mgmtitem1" href="https://www.pmi.org/certifications/types/program-management-pgmp" tooltiptext="PMI Program Management Professional
-$1,000 exam" tabindex="0" target="_blank">PgMP</a>
+            <a class="mgmtitem1" href="https://www.pmi.org/certifications/types/program-management-pgmp" tooltiptext="PMI Program Management Professional $1,000 exam" tabindex="0" target="_blank">PgMP</a>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <a class="mgmtitem1" href="https://www.ncsc.gov.uk/information/about-certified-professional-scheme"
-                tooltiptext="NCSC Certified Cybersecurity Professional - Lead Practitioner
-$1388 interview" tabindex="0" target="_blank">NCSC CCPLP</a>
+                tooltiptext="NCSC Certified Cybersecurity Professional - Lead Practitioner $1388 interview" tabindex="0" target="_blank">NCSC CCPLP</a>
             <div class="spacer5"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
-            <a class="blueopsitem1" href="https://www.iacis.com/certification/" tooltiptext="IACIS Certified Forensic Computer Examiner
-$750 4 peer reviewed exams" tabindex="0" target="_blank">CFCE</a>
+            <a class="blueopsitem1" href="https://www.iacis.com/certification/" tooltiptext="IACIS Certified Forensic Computer Examiner $750 4 peer reviewed exams" tabindex="0" target="_blank">CFCE</a>
             <div class="spacer5"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
-            <a class="redopsitem2" href="https://www.giac.org/certification/gxpn" tooltipright="GIAC Exploit Researcher and Advanced Penetration Tester
-$949 exam
-SANS course recommended" tabindex="0" target="_blank">GXPN</a>
+            <a class="redopsitem2" href="https://www.giac.org/certification/gxpn" tooltipright="GIAC Exploit Researcher and Advanced Penetration Tester $949 exam SANS course recommended" tabindex="0" target="_blank">GXPN</a>
             <div class="spacer"></div>
             <!-- Row 6 -->
             <div class="skilllevelitem"><span style="color:var(--reddk)">Expert</span></div>
@@ -1050,25 +209,19 @@ SANS course recommended" tabindex="0" target="_blank">GXPN</a>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <a class="engineeritem1" href="https://www.vmware.com/education-services/certification/vcap-dcv-design.html"
-                tooltiptext="VMware Certified Implementation Expert in Datacenter Virtualization
-$900 two exams" tabindex="0" target="_blank">VCIX DCV</a>
+                tooltiptext="VMware Certified Implementation Expert in Datacenter Virtualization $900 two exams" tabindex="0" target="_blank">VCIX DCV</a>
             <div class="spacer"></div>
             <a class="engineeritem1"
                 href="https://training.linuxfoundation.org/certification/linux-foundation-certified-engineer-lfce/"
-                tooltiptext="Linux Foundation Certified Engineer
-$300 exam" tabindex="0" target="_blank">LFCE</a>
-            <a class="engineeritem1" href="https://www.sans.org/course/ics-cyber-security-in-depth" tooltiptext="SANS ICS612: ICS Cybersecurity in-Depth (Certification Pending)
-~$949 exam
-SANS course encouraged" tabindex="0" target="_blank">GIAC ICS612</a>
+                tooltiptext="Linux Foundation Certified Engineer $300 exam" tabindex="0" target="_blank">LFCE</a>
+            <a class="engineeritem1" href="https://www.sans.org/course/ics-cyber-security-in-depth" tooltiptext="SANS ICS612: ICS Cybersecurity in-Depth (Certification Pending) ~$949 exam SANS course encouraged" tabindex="0" target="_blank">GIAC ICS612</a>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <div class="spacer"></div>
             <a class="assetitem2" href="https://www.asisonline.org/certification/certified-protection-professional-cpp/"
-                tooltiptext="ASIS Certified Protection Professional
-$485 exam" tabindex="0" target="_blank">ASIS CPP</a>
+                tooltiptext="ASIS Certified Protection Professional $485 exam" tabindex="0" target="_blank">ASIS CPP</a>
             <a class="mgmtitem1" href="https://www.zachman.com/certification/what-we-certify/enterprise-architect"
-                tooltiptext="Zachman Enterprise Architect Professional (Level 3)
-$2,999 exam &amp; case study
+                tooltiptext="Zachman Enterprise Architect Professional (Level 3) $2,999 exam &amp; case study
 Level 1 &amp; 2 cert not req'd" tabindex="0" target="_blank">Zach EAPro</a>
             <a class="mgmtitem1" href="https://www.pmi.org/certifications/project-management-pmp" tooltiptext="PMI Project Management Professional
 $555 exam" tabindex="0" target="_blank">PMP</a>
@@ -1343,7 +496,8 @@ $450 certification programme
 100% practical. No expiry." tabindex="0">MCD</a>
             <div class="spacer"></div>
             <!-- <a class="redopsitem1" href="http://www.iacertification.org/cerea.html" tooltipright="IACRB Certified Expert Reserve Engineering Analyst
-$499 exam" tabindex="0" target="_blank" >CEREA</a> -->
+$499 exam" 
+tabindex="0" target="_blank" >CEREA</a> -->
             <!-- Row 11 -->
             <div class="spacer"></div>
             <div class="spacer"></div>
@@ -2222,7 +1376,8 @@ $450 exam" tabindex="0" target="_blank">CTIA</a>
             <a class="redopsitem1" href="https://thecyberscheme.org/cyber-scheme-team-member-cstm-exam/" tooltiptext="Cyber Scheme Team Member
 $610 exam" tabindex="0" target="_blank">CSTM</a>
             <!-- <a class="redopsitem1" href="http://iacertification.org/cpt_certified_penetration_tester.html" tooltiptext="IACRB Certified Penetration Tester
-$499 exam" tabindex="0" target="_blank" >CPT</a> -->
+$499 exam" 
+tabindex="0" target="_blank" >CPT</a> -->
             <a class="redopsitem1"
                 href="https://ine.com/learning/certifications/internal/elearnsecurity-junior-penetration-tester-v2"
                 tooltiptext="eLearnSecurity Junior Penetration Tester
