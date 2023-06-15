@@ -63,18 +63,17 @@
     grid-template-columns: [silllevel] 0.8vmax [network] 7.5vmax [iam] 2.65vmax [engineer] 17.2vmax [asset] 5.1vmax [mgmt] 21.8vmax [testing] 7.5vmax [software] 2.7vmax [operations] 31.5vmax;
     grid-template-rows: [domain] 2vmax [chart] 43.7vmax;
     column-gap: 0.2vmax;
-    /* row-gap: 0.2vmax; */
+    row-gap: 0.2vmax;
     white-space: pre-wrap;
-    line-height: 130%;
+    /* line-height: 130%; */
     left: -0.7vmax;
 }
 
 /* Style for the title text of each domain */
 .domaintitle {
-    font-weight: 450;
-    font-size: 0.8vmax;
+    font-weight: bold;
+    font-size: 0.75vmax;
     text-align: center;
-    align-content: bottom;
     justify-content: center;
     align-self: flex-end;
     display: flex;
@@ -251,8 +250,8 @@
     display: grid;
     position: absolute;
     font-size: 0.6vmax;
-    top: 6.2vmax;
-    left: -0.31vmax;
+    top: 7vmax;
+    left: 0.3vmax;
     grid-template-columns: [skilllevel] 1.7vmax [network] 2.3vmax 2.3vmax 2.3vmax .4vmax [iam] 2.3vmax .4vmax [engineer] 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 0.4vmax [asset] 2.3vmax 2.3vmax 0.4vmax [mgmt] 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 0.4vmax [testing] 2.3vmax 2.3vmax 2.3vmax 0.4vmax [software] 2.3vmax 0.4vmax [ops] 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax;
     grid-template-rows: repeat(27, 1.5vmax);
     column-gap: 0.1vmax;
@@ -260,23 +259,6 @@
     white-space: pre-wrap;
 }
 
-/* Skill level grid overlayed on top of .certcontainer to show
-    .skilllevel {
-        justify-content: center;
-        text-align: center;
-        align-content: center;
-        line-height: 120%;
-        display: grid;
-        position: absolute;
-        font-size:0.6vmax;
-        top: 3.5vmax;
-        left: 2.6vmax;
-        grid-template-columns: max-content;
-        grid-template-rows: 13.5vmax 22.5vmax 7.5vmax;
-        column-gap: 0.1vmax;
-        row-gap: 0.1vmax;
-        white-space: pre-wrap;        
-    } */
 .spacer {
     background: none;
 }
@@ -298,6 +280,7 @@
     font-weight: 600;
     font-size: 0.8vmax;
     display: grid;
+    line-height: 20px;
 }
 
 .networkitem1 {
@@ -668,36 +651,6 @@
     grid-column: span 3;
 }
 
-/* Draft of different tooltip */
-.tooltiptext {
-    visibility: hidden;
-    background: inherit;
-    color: inherit;
-    text-align: left;
-    padding: 0.3vmax;
-    border-radius: 0.2vmax;
-
-    position: absolute;
-    bottom: 97%;
-    left: 50%;
-    margin-left: -17.8%;
-}
-
-.mgmtitem25:hover .tooltiptext {
-    visibility: visible;
-}
-
-.tooltiptext::after {
-    content: " ";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
-}
-
 /* Certification tooltip hover text format */
 [tooltiptext]:before {
     position: absolute;
@@ -709,7 +662,6 @@
     border: inherit;
     border-radius: 0.2vmax;
     color: inherit;
-    text-align: left;
     display: none;
     font-size: 125%;
 }
@@ -728,7 +680,6 @@
     border: var(--blackdk);
     border-radius: 0.2vmax;
     color: white;
-    text-align: left;
     display: none;
     font-size: 100%;
     z-index: 1;
