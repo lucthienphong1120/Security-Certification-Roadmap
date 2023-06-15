@@ -1,3 +1,10 @@
+* {
+    /* margin: 0; */
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", "Calibri", Tahoma, "Geneva", Verdana, sans-serif;
+}
+
 /* Set fill and line colors for certification boxes. dk suffix means "dark" for the line color. */
 :root {
     --green: #70AD47;
@@ -50,7 +57,6 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-family: "Segoe UI", "Calibri", Tahoma, "Geneva", Verdana, sans-serif;
     float: left;
 }
 
@@ -250,7 +256,7 @@
     display: grid;
     position: absolute;
     font-size: 0.6vmax;
-    top: 7vmax;
+    top: 7.5vmax;
     left: 0.3vmax;
     grid-template-columns: [skilllevel] 1.7vmax [network] 2.3vmax 2.3vmax 2.3vmax .4vmax [iam] 2.3vmax .4vmax [engineer] 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 0.4vmax [asset] 2.3vmax 2.3vmax 0.4vmax [mgmt] 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 0.4vmax [testing] 2.3vmax 2.3vmax 2.3vmax 0.4vmax [software] 2.3vmax 0.4vmax [ops] 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax 2.3vmax;
     grid-template-rows: repeat(27, 1.5vmax);
